@@ -22,16 +22,16 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SnowBlackList extends JavaPlugin implements Listener {
-	static String mainDirectory = "plugins" + File.separator + "SnowBlackList";
-	static File configFile = new File(mainDirectory + File.separator + "config");
-	static File versionFile = new File(mainDirectory + File.separator + "VERSION");
+	private static String mainDirectory = "plugins" + File.separator + "SnowBlackList";
+	private static File configFile = new File(mainDirectory + File.separator + "config");
+	private static File versionFile = new File(mainDirectory + File.separator + "VERSION");
 
-	public Logger log = Logger.getLogger("Minecraft");
+	private Logger log = Logger.getLogger("Minecraft");
 
-	public Properties prop = new Properties();
+	private Properties prop = new Properties();
 
-	public ArrayList<World> worlds = new ArrayList<World>();
-	public ArrayList<Integer> blocks = new ArrayList<Integer>();
+	private ArrayList<World> worlds = new ArrayList<World>();
+	private ArrayList<Integer> blocks = new ArrayList<Integer>();
 
 	public void onEnable() {
 		new File(mainDirectory).mkdir();
