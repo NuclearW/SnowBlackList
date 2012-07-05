@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.World;
 import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,26 +23,24 @@ public class SnowBlackList extends JavaPlugin {
 	static String mainDirectory = "plugins" + File.separator + "SnowBlackList";
 	static File configFile = new File(mainDirectory + File.separator + "config");
 	static File versionFile = new File(mainDirectory + File.separator + "VERSION");
-	
-	private final snowblacklistBlockListener blockListener = new snowblacklistBlockListener(this);
-	
+
 	public Logger log = Logger.getLogger("Minecraft");
-	
+
 	public Properties prop = new Properties();
-	
+
 	public ArrayList<World> worlds = new ArrayList<World>();
 	public ArrayList<Integer> blocks = new ArrayList<Integer>();
-	
+
 	public void onEnable() {
 		new File(mainDirectory).mkdir();
-		
+
 		if(!versionFile.exists()) {
 			updateVersion();
 		} else {
 			String vnum = readVersion();
 			if(vnum.equals("0.1")) updateVersion();
 		}
-		
+
 		if(!configFile.exists()) {
 			try {
 				configFile.createNewFile();
@@ -58,7 +55,7 @@ public class SnowBlackList extends JavaPlugin {
 				ex.printStackTrace();
 			}
 		}
-		
+
 		FileInputStream configIn;
 		try {
 			configIn = new FileInputStream(configFile);
@@ -69,7 +66,7 @@ public class SnowBlackList extends JavaPlugin {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 		String activeWorldsStr = prop.getProperty("active-worlds");
 		if(activeWorldsStr.contains(",")) {
 			String[] activeWorlds = activeWorldsStr.split(",");
@@ -79,7 +76,7 @@ public class SnowBlackList extends JavaPlugin {
 		} else {
 			this.worlds.add(getServer().getWorld(activeWorldsStr));
 		}
-		
+
 		if(prop.getProperty("blacklisted-blocks") != null) {
 			String customBlocksStr = prop.getProperty("blacklisted-blocks");
 			if(customBlocksStr.contains(",")) {
@@ -101,19 +98,18 @@ public class SnowBlackList extends JavaPlugin {
 				}
 			}
 		}
-		
+
 		PluginManager pluginManager = getServer().getPluginManager();
-		
+
 		pluginManager.registerEvent(Event.Type.SNOW_FORM, blockListener, Priority.Normal, this);
-		
+
 		log.info("[SnowBlackList] version "+ this.getDescription().getVersion() +" loaded.");
-		
 	}
-	
+
 	public void onDisable() {
 		log.info("[SnowBlackList] version "+ this.getDescription().getVersion() +" unloaded.");
 	}
-	
+
 	public void updateVersion() {
 		try {
 			versionFile.createNewFile();
@@ -140,7 +136,7 @@ public class SnowBlackList extends JavaPlugin {
 		} finally {
 			if (f != null) try { f.close(); } catch (IOException ignored) { }
 		}
-		
+
 		return new String(buffer);
 	}
 }
