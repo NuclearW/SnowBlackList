@@ -12,9 +12,12 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.event.Event;
+import org.bukkit.block.BlockState;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -107,6 +110,19 @@ public class SnowBlackList extends JavaPlugin implements Listener {
 
 	public void onDisable() {
 		log.info("[SnowBlackList] version "+ this.getDescription().getVersion() +" unloaded.");
+	}
+
+	@EventHandler
+	public void onSnowForm(BlockFormEvent event) {
+		BlockState snowTile = event.getNewState();
+		if(snowTile.getType() != Material.SNOW) return;
+		int x = snowTile.getX();
+		int y = snowTile.getY() - 1;
+		int z = snowTile.getZ();
+		World world = snowTile.getWorld();
+		if(!worlds.contains(world)) return;
+		if(!blocks.contains(world.getBlockTypeIdAt(x, y, z))) return;
+		event.setCancelled(true);
 	}
 
 	public void updateVersion() {
