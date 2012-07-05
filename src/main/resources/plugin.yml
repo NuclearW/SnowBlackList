@@ -1,0 +1,5 @@
+name: ${project.name}
+main: com.nuclearw.snowblacklist.SnowBlackList
+version: ${project.version}
+author: NuclearW
+description: SnowBlackList allows admins to disable snow growth on certain blocks, on certain 

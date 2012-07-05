@@ -1,0 +1,7 @@
+== SnowBlackList
+
+SnowBlackList allows admins to disable snow growth on certain blocks, on certain worlds.
+
+=== Compiling
+
+Maven 3 is required to compile AdminPVPToggle
