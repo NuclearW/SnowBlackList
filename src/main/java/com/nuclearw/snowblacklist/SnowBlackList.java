@@ -14,12 +14,11 @@ import java.util.logging.Logger;
 
 import org.bukkit.World;
 import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import sl.nuclearw.snowblacklist.snowblacklistBlockListener;
-
-public class SnowBlackList extends JavaPlugin {
+public class SnowBlackList extends JavaPlugin implements Listener {
 	static String mainDirectory = "plugins" + File.separator + "SnowBlackList";
 	static File configFile = new File(mainDirectory + File.separator + "config");
 	static File versionFile = new File(mainDirectory + File.separator + "VERSION");
@@ -101,7 +100,7 @@ public class SnowBlackList extends JavaPlugin {
 
 		PluginManager pluginManager = getServer().getPluginManager();
 
-		pluginManager.registerEvent(Event.Type.SNOW_FORM, blockListener, Priority.Normal, this);
+		pluginManager.registerEvents(this, this);
 
 		log.info("[SnowBlackList] version "+ this.getDescription().getVersion() +" loaded.");
 	}
